@@ -1,0 +1,63 @@
+Imports MySql.Data.MySqlClient
+Public Class Form1
+    Public Sub connect()
+        Dim Details As String = "Data Source=localhost;port=3306;username=root;database=inventory"
+        Dim conn As MySqlConnection
+        conn = New MySqlConnection(Details)
+        
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim str As String = "Data Source=localhost;port=3306;username=root;database=inventory"
+
+        Dim con As New MySqlConnection(str)
+
+        Dim com As String = "Select * from view_stock"
+
+        Dim Adpt As New MySqlDataAdapter(com, con)
+
+        Dim ds As New DataSet()
+
+        Adpt.Fill(ds, "View_stock")
+
+        DataGridView1.DataSource = ds.Tables(0)
+
+        ComboBox1.Items.Add("Name")
+        ComboBox1.Items.Add("Batch Quantity")
+        ComboBox1.Items.Add("Units per Batch")
+        ComboBox1.Items.Add("Total Units")
+        ComboBox1.Items.Add("Unit Price")
+        ComboBox1.Items.Add("Batch Price")
+        ComboBox1.Items.Add("Batch Remainder")
+        ComboBox1.Items.Add("Category")
+        ComboBox1.SelectedItem = ComboBox1.Items(0)
+       
+    End Sub
+
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+       
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        Dim str As String = "Data Source=localhost;port=3306;username=root;database=inventory"
+
+        Dim con As New MySqlConnection(str)
+
+        Dim com As String = "Select '" & ComboBox1.Text & "' from view_stock where name = '" & TextBox1.Text & "'"
+
+        Dim Adpt As New MySqlDataAdapter(com, con)
+
+        Dim ds As New DataSet()
+
+        Adpt.Fill(ds, "View_stock")
+
+        DataGridView1.DataSource = ds.Tables(0)
+
+    End Sub
+End Class
